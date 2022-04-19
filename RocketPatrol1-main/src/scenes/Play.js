@@ -5,11 +5,13 @@ class Play extends Phaser.Scene {
 
     preload() {
         // loading images/tile sprites
-        this.load.image('rocket', './assets/rocket.png');
+        this.load.image('crab', './assets/crab.png');
         //this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('fishy', './assets/fishy.png');
         //this.load.image('starfield', './assets/starfield.png');       //testing ocean background
         this.load.image('ocean', './assets/ocean.png');
+
+        this.load.audio('background_music', './assets/BackgroundMusic.mp3');
 
         // spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0,
@@ -22,17 +24,10 @@ class Play extends Phaser.Scene {
         this.ocean = this.add.tileSprite(0, 0, 640, 480, 'ocean').setOrigin(0, 0);
         // adding green UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
-        // adding white borders
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
+
         // adding rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
-        // add 3 spaceships
-        //this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
-        //this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0, 0);
-        //this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0, 0);
+        this.p1Crab = new Crab(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'crab').setOrigin(0.5, 0);
+        // add 3 fishy
         this.fish01 = new Fish(this, game.config.width + borderUISize*6, borderUISize*4, 'fishy', 0, 30).setOrigin(0, 0);
         this.fish02 = new Fish(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'fishy', 0, 20).setOrigin(0, 0);
         this.fish03 = new Fish(this, game.config.width, borderUISize*6 + borderPadding*4, 'fishy', 0, 10).setOrigin(0, 0);        
@@ -42,6 +37,9 @@ class Play extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+        this.sound.play('background_music');
+
         // animation config
         this.anims.create({
         key: 'explode',
@@ -94,33 +92,33 @@ class Play extends Phaser.Scene {
 
         if (!this.gameOver) {
             // updates rocket movement
-            this.p1Rocket.update();
+            this.p1Crab.update();
             // updates spaceship movement
             this.fish01.update();
             this.fish02.update();
             this.fish03.update();
         }
         // check collisions
-        if(this.checkCollision(this.p1Rocket, this.fish03)) {
-            this.p1Rocket.reset();
+        if(this.checkCollision(this.p1Crab, this.fish03)) {
+            this.p1Crab.reset();
             this.fishExplode(this.fish03);
         }
-        if (this.checkCollision(this.p1Rocket, this.fish02)) {
-            this.p1Rocket.reset();
+        if (this.checkCollision(this.p1Crab, this.fish02)) {
+            this.p1Crab.reset();
             this.fishExplode(this.fish02);
         }
-        if (this.checkCollision(this.p1Rocket, this.fish01)) {
-            this.p1Rocket.reset();
+        if (this.checkCollision(this.p1Crab, this.fish01)) {
+            this.p1Crab.reset();
             this.fishExplode(this.fish01);
         }
     }
 
-    checkCollision(rocket, fish) {
+    checkCollision(crab, fish) {
         // simple AABB checking
-        if (rocket.x < fish.x + fish.width && 
-            rocket.x + rocket.width > fish.x && 
-            rocket.y < fish.y + fish.height &&
-            rocket.height + rocket.y > fish. y) {
+        if (crab.x < fish.x + fish.width && 
+            crab.x + crab.width > fish.x && 
+            crab.y < fish.y + fish.height &&
+            crab.height + crab.y > fish. y) {
                 return true;
         } else {
             return false;
