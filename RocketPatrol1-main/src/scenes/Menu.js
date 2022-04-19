@@ -13,9 +13,9 @@ class Menu extends Phaser.Scene {
     create() {
         let menuConfig = {
             fontFamily: 'Tahoma',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            fontSize: '30px',
+            backgroundColor: '#00BBAB',
+            color: '#FFF',
             align: 'right',
             padding: {
                 top: 5,
@@ -26,9 +26,10 @@ class Menu extends Phaser.Scene {
 
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize -
         borderPadding, 'CRUSTACEAN CONTROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#00FF00';
-        menuConfig.color = '#000';
+        menuConfig.fontSize = '25px'
+        this.add.text(game.config.width/2, game.config.height/2, 'Use ←→ arrows or (A),(D) to move; Use (W) or ꜛ to fire', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#F3B141';
+        menuConfig.color = '#843605';
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press ← for Novice or → for Expert', menuConfig).setOrigin(0.5);
         
         // defines keys

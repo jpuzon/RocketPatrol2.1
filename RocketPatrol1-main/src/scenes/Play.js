@@ -24,7 +24,7 @@ class Play extends Phaser.Scene {
         //this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
         this.ocean = this.add.tileSprite(0, 0, 640, 480, 'ocean').setOrigin(0, 0);
         // adding green UI background
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00BBAB).setOrigin(0, 0);
 
         // adding rocket (p1)
         this.p1Crab = new Crab(this, game.config.width/2, game.config.height - borderUISize - borderPadding, 'crab').setOrigin(0.5, 0);
@@ -55,7 +55,7 @@ class Play extends Phaser.Scene {
         this.p1Score = 0;
         // display score
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Tahoma',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
